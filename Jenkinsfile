@@ -1,9 +1,10 @@
 #!groovy
-import groovy.json.JsonSlurperClassic
 /*
-This is a test file to checkout scm and echo variables
-*/
-pipiline {
+import groovy.json.JsonSlurperClassic
+
+//This is a test file to checkout scm and echo variables
+
+pipeline {
  agent any
   stage ('SCM Checkout')
    {
@@ -17,4 +18,15 @@ pipiline {
       echo '${test_key}'
       }
    }
+}
+*/
+node("master")
+{
+ stage("SCM Checkout")
+ {
+  checkout scm
+ }
+ def props = readJSON file: './repo.json'
+ def reponame = props.name
+ echo "${reponame}"
 }
